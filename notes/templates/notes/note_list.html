@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title> Note List</title>
+    </head>
+    <body>
+      {% for object in object_list %}
+      <ul>
+
+        <li> pk: {{object.pk}} </li>
+        <li> title: {{object.title}} </li>
+        <li> details: {{object.details}} </li>
+      </ul>
+      <br>
+      {% endfor %}
+
+    </body>
+</html>

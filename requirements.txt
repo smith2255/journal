@@ -1,0 +1,6 @@
+django
+djangorestframework
+django-filter
+ipdb
+model_mommy
+coverage
