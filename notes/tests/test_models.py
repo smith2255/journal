@@ -4,7 +4,7 @@ from django.test import TestCase
 from model_mommy import mommy
 
 
-class UserModelTests(TestCase):
+class UserModelTest(TestCase):
 
     def setUp(self):
         self.user = mommy.make('notes.User')
@@ -13,7 +13,7 @@ class UserModelTests(TestCase):
         self.assertIsInstance(self.user.pk, uuid.UUID)
 
 
-class NoteModelTests(TestCase):
+class NoteModelTest(TestCase):
 
     def setUp(self):
         self.note = mommy.make('notes.Note')
