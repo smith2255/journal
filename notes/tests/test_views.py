@@ -12,11 +12,8 @@ class NoteDetailViewTest(TestCase):
     def test_get_note_details(self):
         path = reverse('notes:note-detail', kwargs={'pk': self.note.pk})
         response = self.client.get(path=path)
-        content = str(response.content)
-        # TODO: fix this after
-        self.assertTrue(content.find(self.note.title))
-        self.assertTrue(content.find(self.note.details))
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['note'], self.note)
 
 
 class NoteListViewTest(TestCase):
