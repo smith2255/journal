@@ -14,8 +14,7 @@ class NoteDetailView(generic.DetailView):
 
 class NoteListView(generic.ListView):
     model = Note
-    # TODO: add this in:
-    # queryset = Note.objects.order_by('-last_edited')
+    queryset = Note.objects.order_by('-last_edited')
 
 
 class NoteCreateView(generic.CreateView):
