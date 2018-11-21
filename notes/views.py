@@ -27,10 +27,6 @@ class NoteCreateView(generic.CreateView):
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
-    def get_context_data(self, *args, **kwargs):
-        kwargs['owner'] = self.request.user
-        return super().get_context_data(*args, **kwargs)
-
 
 class NoteUpdateView(generic.UpdateView):
 
