@@ -3,15 +3,19 @@
         <title> Note List</title>
     </head>
     <body>
-      {% for object in object_list %}
-      <ul>
-
-        <li> pk: {{object.pk}} </li>
-        <li> title: {{object.title}} </li>
-        <li> details: {{object.details}} </li>
-      </ul>
-      <br>
-      {% endfor %}
-
+      <div>
+        <p><a href="{% url 'notes:note-create' %}"> Create Note </a></p>
+        <hr>
+        <ol>
+        {% for object in object_list %}
+          <li>
+            <a href="{% url 'notes:note-detail' object.pk %}">
+             {{object.title}}: {{object.details}}
+           </a>
+         </l1>
+         <br>
+        {% endfor %}
+        </ol>
+      </div>
     </body>
 </html>

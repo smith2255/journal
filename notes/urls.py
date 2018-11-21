@@ -18,5 +18,10 @@ urlpatterns = [
         'note/<uuid:pk>/',
         views.NoteDetailView.as_view(),
         name='note-detail'
+    ),
+    path(
+        'note/<uuid:pk>/edit/',
+        views.NoteUpdateView.as_view(),
+        name='note-update'
     )
 ]

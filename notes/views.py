@@ -10,8 +10,8 @@ class NoteDetailView(generic.DetailView):
 class NoteListView(generic.ListView):
 
     model = Note
-    # TODO: Sort by: Last Edited
-    # e.g. queryset = Note.objects.order_by('-last_edited')
+    # TODO: add this in:
+    # queryset = Note.objects.order_by('-last_edited')
 
 
 class NoteCreateView(generic.CreateView):
@@ -26,3 +26,9 @@ class NoteCreateView(generic.CreateView):
     def get_context_data(self, *args, **kwargs):
         kwargs['owner'] = self.request.user
         return super().get_context_data(*args, **kwargs)
+
+
+class NoteUpdateView(generic.UpdateView):
+
+    model = Note
+    fields = ['title', 'details']

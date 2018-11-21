@@ -3,6 +3,17 @@
         <title> Note Details</title>
     </head>
     <body>
-        <p> pk: {{object.pk}} </p>
+        <div>
+            <p><a href="{% url 'notes:note-list' %}"> Back </a></p>
+            <hr>
+            <p><b>Title:</b> {{object.title}}</h2>
+            <p><b>Created By:</b> {{object.owner}}</p>
+            <p><b>Created On:</b> {{object.created_on}}</p>
+            <p><b>Last Modified:</b> {{object.last_edited}}</p>
+            <p><b>Details: </b>{{object.details}}</p>
+            <hr>
+            <p><a href="{% url 'notes:note-update' note.pk %}"> Edit </a></p>
+
+        </div>
     </body>
 </html>

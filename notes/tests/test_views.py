@@ -13,6 +13,7 @@ class NoteDetailViewTest(TestCase):
         path = reverse('notes:note-detail', kwargs={'pk': self.note.pk})
         response = self.client.get(path=path)
         content = str(response.content)
+        # TODO: fix this after
         self.assertTrue(content.find(self.note.title))
         self.assertTrue(content.find(self.note.details))
         self.assertEqual(response.status_code, 200)
@@ -49,3 +50,20 @@ class NoteCreateViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(posted_note.details, details)
         self.assertEqual(posted_note.title, title)
+
+
+class NoteUpdateViewTest(TestCase):
+
+    @tag('smoke')
+    def test_update_note(self):
+        note = mommy.make('notes.Note')
+        title = 'title change'
+        details = 'detail change'
+        response = self.client.post(
+            reverse('notes:note-update', kwargs={'pk': note.pk}),
+            {'title': title, 'details': details},
+            follow=True
+        )
+        note.refresh_from_db()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['note'], note)
