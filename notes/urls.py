@@ -5,23 +5,28 @@ app_name = 'notes'
 
 urlpatterns = [
     path(
-        'note/',
+        'notes/',
         views.NoteListView.as_view(),
         name='note-list'
     ),
     path(
-        'note/create/',
+        'notes/create/',
         views.NoteCreateView.as_view(),
         name='note-create'
     ),
     path(
-        'note/<uuid:pk>/',
+        'notes/<uuid:pk>/',
         views.NoteDetailView.as_view(),
         name='note-detail'
     ),
     path(
-        'note/<uuid:pk>/edit/',
+        'notes/<uuid:pk>/add/',
         views.NoteUpdateView.as_view(),
         name='note-update'
+    ),
+    path(
+        'notes/<uuid:pk>/remove/',
+        views.NoteDeleteView.as_view(),
+        name='note-delete'
     )
 ]

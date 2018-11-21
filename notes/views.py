@@ -1,14 +1,18 @@
+from django.urls import reverse_lazy
 from django.views import generic
 from .models import Note
 
 
-class NoteDetailView(generic.DetailView):
+class NoteDeleteView(generic.DeleteView):
+    model = Note
+    success_url = reverse_lazy('notes:note-list')
 
+
+class NoteDetailView(generic.DetailView):
     model = Note
 
 
 class NoteListView(generic.ListView):
-
     model = Note
     # TODO: add this in:
     # queryset = Note.objects.order_by('-last_edited')

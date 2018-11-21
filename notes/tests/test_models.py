@@ -26,6 +26,6 @@ class NoteModelTest(TestCase):
 
     def test_get_absolute_url(self):
         self.assertEqual(
-            '/note/{0}/'.format(self.note.pk),
+            '/notes/{0}/'.format(self.note.pk),
             self.note.get_absolute_url()
         )

@@ -67,3 +67,16 @@ class NoteUpdateViewTest(TestCase):
         note.refresh_from_db()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['note'], note)
+
+
+class NoteDeleteViewTest(TestCase):
+
+    @tag('smoke')
+    def test_update_note(self):
+        note = mommy.make('notes.Note')
+        response = self.client.delete(
+            reverse('notes:note-delete', kwargs={'pk': note.pk}),
+            follow=True
+        )
+        self.assertEqual(response.status_code, 200)
+        # self.assertEqual(response.context['note'], note)
