@@ -1,17 +1,22 @@
 from django.urls import path
-from .views import NoteDetailView, NoteListView
+from . import views
 
 app_name = 'notes'
 
 urlpatterns = [
     path(
         'note/',
-        NoteListView.as_view(),
+        views.NoteListView.as_view(),
         name='note-list'
     ),
     path(
+        'note/create/',
+        views.NoteCreateView.as_view(),
+        name='note-create'
+    ),
+    path(
         'note/<uuid:pk>/',
-        NoteDetailView.as_view(),
+        views.NoteDetailView.as_view(),
         name='note-detail'
     )
 ]
