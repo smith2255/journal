@@ -1,19 +1,48 @@
-<html>
-    <head>
-        <title> Note Details</title>
-    </head>
-    <body>
-        <div>
-            <p><a href="{% url 'notes:note-list' %}"> Back </a></p>
-            <hr>
-            <p><b>Title:</b> {{object.title}}</h2>
-            <p><b>Created By:</b> {{object.owner}}</p>
-            <p><b>Created On:</b> {{object.created_on}}</p>
-            <p><b>Last Modified:</b> {{object.last_edited}}</p>
-            <p><b>Details: </b>{{object.details}}</p>
-            <hr>
-            <p><a href="{% url 'notes:note-update' note.pk %}"> Edit </a></p>
+{% extends "notes/base.html" %}
+
+{% block title %}
+List Notes
+{% endblock %}
+
+
+{% block content %}
+
+<div class="col-sm-8 offset-sm-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <h4><strong>{{object.title}}</strong></h4>
+            </div>
 
         </div>
-    </body>
-</html>
+        <div class="panel-body">
+            <hr>
+            <div class="row">
+                <h7><strong>Created By:</strong> {{object.owner}}</h7>
+            </div>
+             <div class="row">
+                <h7><strong>Created On:</strong> {{object.created_on}}</h7>
+            </div>
+             <div class="row">
+                <h7><strong>Last Modified:</strong> {{object.last_edited}}</h7>
+            </div>
+            <hr>
+            <div class="row">
+                <p>{{object.details}}</p>
+            </div>
+            <br>
+            <div class="row">
+                <a href="{% url 'notes:note-list' %}" class="btn btn-info btn-sm" type="button">Back</a> &nbsp
+                <a href="{% url 'notes:note-update' note.pk %}" class="btn btn-info btn-sm" type="button"> Edit Note </a> &nbsp
+                <a href="{% url 'notes:note-delete' note.pk %}" class="btn btn-danger btn-sm" type="button"> Delete Note </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+

@@ -1,21 +1,40 @@
-<html>
-    <head>
-        <title> Note List</title>
-    </head>
-    <body>
-      <div>
-        <p><a href="{% url 'notes:note-create' %}"> Create Note </a></p>
-        <hr>
-        <ol>
+{% extends "notes/base.html" %}
+
+{% block title %}
+List Notes
+{% endblock %}
+
+
+{% block content %}
+
+<div class="col-sm-8 offset-sm-2">
+
+  <div class="row">
+
+    <table class="table table-striped">
+      <thead>
+        <TH> Title </TH>
+        <TH> Created On </TH>
+        <TH> Last Modified </TH>
+        <TH> Owner </TH>
+      </thead>
+
+      <tbody>
         {% for object in object_list %}
-          <li>
-            <a href="{% url 'notes:note-detail' object.pk %}">
-             {{object.title}}: {{object.details}}
-           </a>
-         </l1>
-         <br>
+        <TR>
+          <TD>
+            <A href="{% url 'notes:note-detail' object.pk %}">{{ object.title }} </A>
+          </TD>
+          <TD> {{ object.created_on }}</TD>
+          <TD> {{ object.last_edited }}</TD>
+          <TD> {{ object.owner }}</TD>
+        </TR>
         {% endfor %}
-        </ol>
-      </div>
-    </body>
-</html>
+      </tbody>
+    </table>
+    <hr>
+    <a href="{% url 'notes:note-create' %}" class="btn btn-info btn-sm" type="button">Add Note</a>
+  </div>
+</div>
+
+{% endblock %}

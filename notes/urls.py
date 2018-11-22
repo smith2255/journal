@@ -20,7 +20,7 @@ urlpatterns = [
         name='note-detail'
     ),
     path(
-        'notes/<uuid:pk>/add/',
+        'notes/<uuid:pk>/update/',
         views.NoteUpdateView.as_view(),
         name='note-update'
     ),
