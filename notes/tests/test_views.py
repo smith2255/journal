@@ -1,6 +1,7 @@
 from django.test import tag, TestCase
 from django.urls import reverse
 from model_mommy import mommy
+from ..models import Note
 
 
 class NoteDetailViewTest(TestCase):
@@ -76,4 +77,5 @@ class NoteDeleteViewTest(TestCase):
             follow=True
         )
         self.assertEqual(response.status_code, 200)
-        # self.assertEqual(response.context['note'], note)
+        with self.assertRaises(Note.DoesNotExist):
+            Note.objects.get(pk=note.pk)
