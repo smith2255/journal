@@ -2,6 +2,7 @@
 Just a small project to keep up with Django, Docker, and Nginx
 
 # TODO
+- Add permissions to the API, and UI
 - Revise Unit Tests
 - Clean-up UI
   - base layout
