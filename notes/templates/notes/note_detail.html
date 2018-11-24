@@ -33,6 +33,7 @@ List Notes
             <br>
             <div class="row">
                 <a href="{% url 'notes:note-list' %}" class="btn btn-info btn-sm" type="button">Back</a> &nbsp
+
                 <a href="{% url 'notes:note-update' note.pk %}" class="btn btn-info btn-sm" type="button"> Edit Note </a> &nbsp
                 <a href="{% url 'notes:note-delete' note.pk %}" class="btn btn-danger btn-sm" type="button"> Delete Note </a>
             </div>
