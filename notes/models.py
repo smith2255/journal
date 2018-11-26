@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 
+# TODO: Add in AbstractGroup, and AbstractPermission
+
 
 class User(AbstractUser):
     id = models.UUIDField(
