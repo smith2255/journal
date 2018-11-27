@@ -1,87 +1,75 @@
 from django.test import TestCase
 from model_mommy import mommy
-from notes.models import Note
-from rest_framework import exceptions, status
-from django.contrib.auth.models import Group, Permission
+from rest_framework import status
+from django.contrib.auth.models import Group
 
 
 class CustomViewSetTest(TestCase):
 
-    @classmethod
-    def setUpTestData(cls):
-        general_group = Group.objects.create(name='moderator')
-        general_group = Group.objects.create(name='basic')
-        general_perms = Permission.objects.filter(
-            codename__in=(
-                'add_note',
-                'delete_note',
-                'change_note',
-                'view_note'
-            )
-        )
-        general_group.permissions.add(*general_perms)
+    def create_user(self, group_name=None):
+        user = mommy.make('notes.User')
+        if group_name:
+            user.groups.add(Group.objects.get(name=group_name))
+        return user
 
-    def setUp(self):
-        self.general_user = mommy.make('notes.User')
-        self.general_user.groups.add(
-            Group.objects.get(name='basic')
-        )
+    def create_note(self, owner=None):
+        if owner:
+            return mommy.make('notes.Note', owner=owner)
+        return mommy.make('notes.Note')
 
 
 class NoteViewSetTest(CustomViewSetTest):
 
-    def setUp(self):
-        super().setUp()
-        self.note = {
-            'owner': self.general_user.pk,
-            'title': 'DRF Test Title',
-            'details': 'These are the details of the note'
-        }
+    def test_group_permissions(self):
+        for group in ('user_group', 'moderator_group'):
+            user = self.create_user(group)
+            self.client.force_login(user)
 
-    def test_perform_create_with_authorized_user(self):
-        self.client.force_login(self.general_user)
-        response = self.client.post(
-            path='/api/notes/',
-            data=self.note
+            response = self.client.get('/api/notes/')
+
+            self.assertEqual(
+                response.status_code,
+                status.HTTP_200_OK
+            )
+
+    def test_unauthorized_user(self):
+        user = self.create_user()
+        self.client.force_login(user)
+
+        response = self.client.get('/api/notes/')
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
         )
+
+    def test_unauthenticated_user(self):
+        response = self.client.get('/api/notes/')
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_403_FORBIDDEN
+        )
+
+    def test_perform_create_sets_user_from_request(self):
+        user = self.create_user('user_group')
+        note = self.create_note()
+
+        self.client.force_login(user)
+        response = self.client.post(
+            '/api/notes/',
+            data={
+                'title': note.title,
+                'details': note.details
+            }
+        )
+
         self.assertEqual(
             response.status_code,
             status.HTTP_201_CREATED
         )
 
-        self.assertTrue(Note.objects.get(pk=response.data['id']))
-
-    def test_perform_create_with_anonymous_user(self):
-        response = self.client.post(
-            path='/api/notes/',
-            data={
-                'title': 'DRF Test Title',
-                'details': 'These are the details of the note'
-            })
-
         self.assertEqual(
-            response.status_code,
-            status.HTTP_403_FORBIDDEN
-        )
-
-        self.assertIsInstance(
-            response.data['detail'],
-            exceptions.ErrorDetail
-        )
-
-    def test_perform_create_when_user_is_not_authorized(self):
-        self.client.force_login(mommy.make('notes.User'))
-        response = self.client.post(
-            path='/api/notes/',
-            data=self.note
-        )
-
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_403_FORBIDDEN
-        )
-
-        self.assertIsInstance(
-            response.data['detail'],
-            exceptions.ErrorDetail
+            response.data['owner'],
+            user.pk
         )
