@@ -1,4 +1,3 @@
-# from django.contrib.auth.models import Group
 from rest_framework import viewsets
 from notes.models import Note, User
 from . import serializers

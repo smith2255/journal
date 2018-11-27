@@ -14,8 +14,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 class NoteSerializer(serializers.ModelSerializer):
 
-    # owner = serializers.StringRelatedField(source='owner.username')
-
     class Meta:
         model = Note
         fields = [
