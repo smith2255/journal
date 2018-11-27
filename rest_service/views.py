@@ -1,14 +1,14 @@
 from rest_framework import viewsets
 from notes.models import Note, User
 from . import serializers
-from .permissions import BasicGroupPermission, ModeratorGroupPermission
+from .permissions import UserGroupPermission, ModeratorGroupPermission
 
 
 class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = serializers.NoteSerializer
     permission_classes = (
-        BasicGroupPermission | ModeratorGroupPermission,
+        UserGroupPermission | ModeratorGroupPermission,
     )
 
     def perform_create(self, serializer):
