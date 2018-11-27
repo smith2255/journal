@@ -10,6 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
             'id',
             'username'
         ]
+        read_only_fields = ('username',)
 
 
 class NoteSerializer(serializers.ModelSerializer):

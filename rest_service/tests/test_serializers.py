@@ -17,19 +17,17 @@ class UserSerializerTest(JournalBaseTest):
         self.assertEqual(actual, expected)
 
     def test_basic_deserialize(self):
-        expected_data = OrderedDict((
+        test_data = OrderedDict((
             ('username', 'random'),
+            ('id', 'f324'),
+            ('extra', 'exta094382')
         ))
-        test_data = expected_data.copy()
-        test_data['id'] = 'fdsaf'
 
         user_serializer = UserSerializer(data=test_data)
 
         self.assertTrue(user_serializer.is_valid())
-        self.assertEqual(
-            user_serializer.data,
-            expected_data
-        )
+
+        self.assertFalse(user_serializer.data)
 
 
 class NoteSerializerTest(JournalBaseTest):
